@@ -1,0 +1,17 @@
+{
+  "name": "Mi Recetario Inteligente",
+  "short_name": "Mi Recetario",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1c3026",
+  "theme_color": "#1c3026",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
