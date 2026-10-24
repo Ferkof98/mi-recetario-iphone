@@ -316,3 +316,17 @@ function onModified(raw){setBusy(false);try{let r=JSON.parse(raw.replace(/^```(?
 async function restoreBackup(event){let f=event.target.files?.[0];if(!f)return;try{let a=JSON.parse(await f.text());if(!Array.isArray(a)||!a.every(r=>r&&typeof r.titulo==='string'&&Array.isArray(r.ingredientes)))throw Error('Formato inválido');if(!confirm('¿Importar '+a.length+' recetas? Se conservarán las actuales.'))return;let arr=stored(),seen=new Set(arr.map(fingerprint));for(let r of a){let fp=fingerprint(r);if(!seen.has(fp)){arr.push({...r,id:r.id||Date.now()+'-'+Math.random()});seen.add(fp)}}localStorage.setItem('recetas-v1',JSON.stringify(arr));render();renderHome();alert('✓ Copia restaurada: '+a.length+' recetas revisadas.')}catch(e){text('status','⚠️ No se pudo importar: '+e.message)}event.target.value=''}
 ['dish','people','link','description','tm','servings','substitution'].forEach(id=>$(id).addEventListener('input',persistDraft));window.addEventListener('pagehide',persistDraft);document.addEventListener('visibilitychange',()=>{if(document.hidden)persistDraft()});setMode('name');restoreDraft();render();applyTheme();if(!localStorage.getItem('recetario-language'))localStorage.setItem('recetario-language',detectInitialLanguage());$('languageSelect').value=localStorage.getItem('recetario-language');navigate('home');applyUILanguage();if(localStorage.getItem('recetario-onboarding-v142')!=='done')setTimeout(openOnboarding,450);setTimeout(()=>{if(window.Android&&Android.hasKey()){text('keyStatus',' ✓ Clave configurada');$('keyCard').classList.add('hidden')}},300);
 </script><script>(function(){function grow(t){t.style.height='auto';t.style.height=Math.max(110,t.scrollHeight+3)+'px'}document.querySelectorAll('textarea').forEach(t=>{grow(t);t.addEventListener('input',()=>grow(t));});const o=new MutationObserver(()=>document.querySelectorAll('textarea').forEach(grow));o.observe(document.getElementById('result'),{childList:true,subtree:true});})();</script><nav aria-label="Navegación principal" id="bottomNav"><button data-nav="home" onclick="navigate('home')"><span>⌂</span>Inicio</button><button data-nav="create" onclick="openCreate('name')"><span>＋</span>Crear</button><button data-nav="library" onclick="navigate('library')"><span>▤</span>Mis recetas</button><button data-nav="settings" onclick="navigate('settings')"><span>⚙</span>Ajustes</button></nav><script src="web-adapter.js"></script></body></html>
+<style>
+#onboarding .onboard-inner {
+  background: #ffffff !important;
+  color: #20362e !important;
+}
+#onboarding h2,
+#onboarding p,
+#onboarding label {
+  color: #20362e !important;
+}
+#onboarding .hint {
+  color: #53675b !important;
+}
+</style>
