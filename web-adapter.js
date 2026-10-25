@@ -8,7 +8,7 @@ const hasKey=()=>!!getKey();
 const recipeSchema={type:'OBJECT',properties:{titulo:{type:'STRING'},ingredientes:{type:'ARRAY',items:{type:'STRING'}},pasos:{type:'ARRAY',items:{type:'STRING'}},thermomix:{type:'ARRAY',items:{type:'STRING'}},notas:{type:'STRING'}},required:['titulo','ingredientes','pasos']};
 async function gemini(prompt,schema=recipeSchema){
  const key=getKey();if(!key)throw Error('Primero configura tu propia clave Gemini en Ajustes.');
- const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+ const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent';
  const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json',responseSchema:schema}})});
  const payload=await response.json().catch(()=>({}));
  if(!response.ok)throw Error(payload?.error?.message||'Error HTTP '+response.status);
